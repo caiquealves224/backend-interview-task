@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "target": "ES6",                      // Define a versão do JavaScript alvo (ES6, ES2017, ESNext, etc.)
+      "module": "CommonJS",                 // Define o sistema de módulos (CommonJS para Node.js)
+      "rootDir": "./../app",                   // Diretório raiz do código TypeScript
+      "outDir": "./dist",                   // Diretório de saída para o código JavaScript compilado
+      // "strict": true,                    // Ativa verificações estritas de tipo
+      "moduleResolution": "node",           // Resolve módulos à moda do Node.js
+      "esModuleInterop": true,              // Habilita interoperabilidade entre módulos ES e CommonJS
+      "skipLibCheck": true,                 // Ignora a verificação de tipos em arquivos de declaração (mais rápido)
+      "forceConsistentCasingInFileNames": true, // Garante que o case nos nomes dos arquivos seja consistente
+      "resolveJsonModule": true,            // Permite a importação de arquivos .json
+      "isolatedModules": true,              // Garante que cada arquivo seja tratado como um módulo separado
+      "noEmit": false,                      // Controla a geração de arquivos de saída
+      "allowJs": true,                      // Permite a compilação de arquivos .js
+      "checkJs": false,                     // Não verifica erros em arquivos JavaScript
+      "types": ["node", "@types/koa", "@types/koa__router", "jest"],                    // Inclui os tipos do Node.js
+      "sourceMap": true,                     // Gera arquivos source maps para depuração
+      "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+    },
+    "include": ["src/**/*.ts", "tests/**/*.ts"],
+    "exclude": ["node_modules", "dist", "coverage"] // Exclui node_modules e dist da compilação
+  }
+  

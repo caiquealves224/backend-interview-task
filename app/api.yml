@@ -1,0 +1,169 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: API de Autenticação e Gerenciamento de Usuários
+  description: Documentação para endpoints de autenticação e gerenciamento de usuários
+host: localhost:3000
+basePath: /api
+schemes:
+  - http
+paths:
+  /auth:
+    post:
+      summary: Autenticar ou registrar usuário
+      description: Realiza o login ou registra um novo usuário caso ele não exista.
+      parameters:
+        - in: body
+          name: body
+          description: Dados de autenticação ou registro do usuário
+          required: true
+          schema:
+            $ref: '#/definitions/AuthRequestBody'
+      responses:
+        200:
+          description: Login bem-sucedido
+          schema:
+            $ref: '#/definitions/AuthResponse'
+        201:
+          description: Registro e login bem-sucedidos
+          schema:
+            $ref: '#/definitions/AuthResponse'
+        400:
+          description: Nome, email ou senha faltando
+        500:
+          description: Erro no servidor
+
+  /me:
+    get:
+      summary: Obter informações do usuário autenticado
+      description: Retorna os dados do usuário autenticado com base no token de autenticação.
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Usuário encontrado
+          schema:
+            $ref: '#/definitions/User'
+        401:
+          description: Token de autenticação inválido ou ausente
+        404:
+          description: Usuário não encontrado
+
+  /edit-account/{id}:
+    patch:
+      summary: Editar informações de uma conta
+      description: Permite que o usuário edite sua própria conta ou que um administrador edite a conta de outro usuário.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do usuário a ser editado (administradores podem editar outros usuários)
+          type: integer
+        - in: body
+          name: body
+          description: Dados a serem editados (nome e, opcionalmente, o papel do usuário)
+          required: true
+          schema:
+            $ref: '#/definitions/EditUserRequestBody'
+      responses:
+        200:
+          description: Usuário editado com sucesso
+          schema:
+            $ref: '#/definitions/User'
+        401:
+          description: Token de autenticação inválido ou ausente
+        404:
+          description: Usuário não encontrado
+        403:
+          description: Acesso negado para edição
+
+  /users:
+    get:
+      summary: Listar todos os usuários
+      description: Retorna uma lista de todos os usuários (requer autorização de administrador).
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Lista de usuários retornada com sucesso
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        401:
+          description: Token de autenticação inválido ou ausente
+        403:
+          description: Acesso negado
+
+definitions:
+  AuthRequestBody:
+    type: object
+    required:
+      - name
+      - email
+      - password
+    properties:
+      name:
+        type: string
+        example: João Silva
+      email:
+        type: string
+        example: joao@example.com
+      password:
+        type: string
+        example: senhaSegura123
+
+  AuthResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Account created and signed in successfully
+      token:
+        type: string
+        example: eyJraWQiOiJLTnZNU0p...
+
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: João Silva
+      email:
+        type: string
+        example: joao@example.com
+      role:
+        type: string
+        example: admin
+      isOnboarded:
+        type: boolean
+        example: true
+      createdAt:
+        type: string
+        format: date-time
+        example: '2024-09-15T14:48:00.000Z'
+      updateAt:
+        type: string
+        format: date-time
+        example: '2024-09-15T14:48:00.000Z'
+
+  EditUserRequestBody:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Maria Santos
+      role:
+        type: string
+        example: admin
+
+securityDefinitions:
+  BearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header

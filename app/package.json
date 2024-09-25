@@ -1,0 +1,41 @@
+{
+    "name": "backend-interview-task",
+    "version": "1.0.0",
+    "description": "Projeto desenvolvido para Caveo.",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/index.js",
+        "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+        "typeorm": "typeorm-ts-node-commonjs",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@koa/router": "^13.1.0",
+        "aws-sdk": "^2.1691.0",
+        "dotenv": "^16.4.5",
+        "jsonwebtoken": "^9.0.2",
+        "jwks-rsa": "^3.1.0",
+        "koa": "^2.15.3",
+        "koa-bodyparser": "^4.4.1",
+        "koa-logger": "^3.2.1",
+        "pg": "^8.7.1",
+        "reflect-metadata": "^0.2.2",
+        "swagger2": "^4.0.3",
+        "swagger2-koa": "^2.0.0",
+        "typeorm": "^0.3.20"
+    },
+    "devDependencies": {
+        "@types/jest": "^29.5.13",
+        "@types/koa": "^2.15.0",
+        "@types/koa__router": "^12.0.4",
+        "@types/koa-bodyparser": "^4.3.12",
+        "@types/koa-logger": "^3.1.5",
+        "@types/node": "^22.6.0",
+        "jest": "^29.7.0",
+        "ts-jest": "^29.2.5",
+        "ts-node": "^10.9.2",
+        "ts-node-dev": "^2.0.0",
+        "typescript": "^5.6.2"
+    }
+}
