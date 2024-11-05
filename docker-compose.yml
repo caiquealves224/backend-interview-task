@@ -12,7 +12,6 @@ services:
 
   db:
     image: postgres:latest
-    restart: always
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
